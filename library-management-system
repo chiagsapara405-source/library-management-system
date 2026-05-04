@@ -1,0 +1,193 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define MAX 50   // maximum number of books
+// structure to store book data
+struct book {
+    int id, qnt;      // book id and quantity
+    char name[30];    // book name
+    char author[30];  // book author
+    char category[30]; // book category
+    int price;         // book price
+};
+
+
+struct book b[MAX];   // array of books
+int n = 0;            // current number of books
+
+
+// ---------------- ADD BOOK ----------------
+void addbook() {
+    printf("Enter book id: ");
+    scanf("%d", &b[n].id);
+
+
+    printf("Enter book name: ");
+    scanf(" %[^\n]", b[n].name);   // take full name with spaces
+
+
+    printf("Enter book author: ");
+    scanf(" %[^\n]", b[n].author); // take full author name with spaces
+
+
+    printf("Enter book quantity: ");
+    scanf("%d", &b[n].qnt);
+
+
+    printf("Enter book price: ");
+    scanf("%d", &b[n].price);
+
+
+    if (b[n].price < 100) {
+        strcpy(b[n].category, "Cheap");
+    } else if (b[n].price < 500) {
+        strcpy(b[n].category, "Affordable");
+    } else {
+        strcpy(b[n].category, "Expensive");
+    }
+
+
+    n++;   // increase book count
+}
+// ---------------- DISPLAY BOOKS ----------------
+void display() {
+    printf("\nBook Details:\n");
+
+
+    // loop through all books
+    for (int i = 0; i < n; i++) {
+        printf("ID: %d, Name: %s, Author: %s, Qty: %d, Category: %s, Price: %d\n",
+               b[i].id, b[i].name, b[i].author, b[i].qnt, b[i].category, b[i].price);
+
+
+        // check availability
+        if (b[i].qnt == 0)
+            printf("Not Available\n");
+        else
+            printf("Available\n");
+    }
+}
+// ---------------- SEARCH BOOK ----------------
+void search() {
+    int id, found = 0;   // found flag
+
+
+    printf("Enter book id to search: ");
+    scanf("%d", &id);
+
+
+    // loop to find book
+    for (int i = 0; i < n; i++) {
+        if (b[i].id == id) {
+            printf("Book Found: %s\n", b[i].name);
+            found = 1;   // mark as found
+            break;
+        }
+    }
+    if (!found)
+        printf("Book Not Found\n");
+}
+
+
+// ---------------- ISSUE BOOK ----------------
+void issue() {  // function to issue a book
+    int id, found = 0;
+
+
+    printf("Enter book id to issue: ");
+    scanf("%d", &id);
+
+
+    for (int i = 0; i < n; i++) {
+        if (b[i].id == id) {
+            found = 1;
+
+
+            // check if available
+            if (b[i].qnt > 0) {
+                b[i].qnt--;   // decrease quantity
+                printf("Book Issued\n");
+            } else {
+                printf("Not Available\n");
+            }
+            break;
+        }
+    }
+
+
+    if (!found)
+        printf("Book Not Found\n");
+}
+
+
+// ---------------- RETURN BOOK ----------------
+void returnbook() {  // function to return a book
+    int id, found = 0;
+
+
+    printf("Enter book id to return: ");
+    scanf("%d", &id);
+
+
+    for (int i = 0; i < n; i++) {
+        if (b[i].id == id) {
+            b[i].qnt++;   // increase quantity
+            printf("Book Returned\n");
+            found = 1;
+            break;
+        }
+    }
+    if (!found)
+        printf("Book Not Found\n");
+}
+
+
+// ---------------- MAIN FUNCTION ----------------
+
+
+
+
+int main() {
+    int choice;
+
+
+    while (1) {
+        printf("\nLibrary Management System\n");
+        printf("1. Add Book\n");
+        printf("2. Display Books\n");
+        printf("3. Search Book\n");
+        printf("4. Issue Book\n");
+        printf("5. Return Book\n");
+        printf("6. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+
+        switch (choice) {
+            case 1:
+                addbook();
+                break;
+            case 2:
+                display();
+                break;
+            case 3:
+                search();
+                break;
+            case 4:
+                issue();
+                break;
+            case 5:
+                returnbook();
+                break;
+            case 6:
+                exit(0);
+            default:
+                printf("Invalid choice! Try again.\n");
+        }
+    }
+
+
+    return 0;
+
+
+}
