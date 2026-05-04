@@ -1,2 +1,16 @@
-# library-management-system
-A simple Library Management System implemented in C
+# Library Management System (C)
+
+## Features
+- Add book
+- Search book
+- Issue/Return
+
+## Concepts Used
+- Structs
+- Arrays
+- Functions
+- Switch-case
+
+## How to Run
+gcc library.c -o lib
+./lib
